@@ -13,19 +13,34 @@
 
 <body>
 
-    <div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a th:href="@{/}" class="navbar-brand">TechJobs</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a th:href="@{/search}">Search</a></li>
-                    <li><a th:href="@{/list}">List</a></li>
-                </ul>
-            </div>
+
+<div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a th:href="@{/}" class="navbar-brand">TechJobs</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav" th:each="action : ${actions}">
+                <li><a th:href="@{'/' + ${action.key}}" th:text="${action.value}">####</a></li>
+            </ul>
         </div>
     </div>
+</div>
+
+<table class="job-listing" th:fragment="job-listing">
+    <th:block th:each="job : ${jobs}">
+        <tr>
+            <td style="font-weight: bolder">
+                ID: <span class="job-data" th:text="${job.id}">#</span><br/>
+                Name: <span class="job-data" th:text="${job.name}">#</span><br/>
+                Employer: <a class="job-data" th:href="@{/list/jobs(column=employer,value=${job.employer})}" th:text="${job.employer}"></a><br/>
+                Location: <a class="job-data" th:href="@{/list/jobs(column=location,value=${job.location})}" th:text="${job.location}">#</a><br/>
+                Position Type: <a class="job-data" th:href="@{/list/jobs(column=positionType,value=${job.positionType})}" th:text="${job.positionType}">#</a><br/>
+                Skill: <a class="job-data" th:href="@{/list/jobs(column=coreCompetency,value=${job.coreCompetency})}" th:text="${job.coreCompetency}">#</a>
+            </td>
+        </tr>
+    </th:block>
+</table>
 
 </body>
 </html>
